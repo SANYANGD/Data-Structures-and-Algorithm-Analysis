@@ -1,0 +1,73 @@
+stantiated by calling the object with the necessary parameters, e.g.:
+dave = Person(30, 178, 'Dave')
+Named arguments can also be used:
+jack = Person(age=30, height=178, name='Jack S.')
+Now you can access the attributes of the namedtuple:
+print(jack.age)  # 30 print(jack.name)  # 'Jack S.'
+The ﬁrst argument to the namedtuple constructor (in our example 'Person') is the typename. It is typical to use the same word for the constructor and the typename, but they can be diﬀerent:
+Human = namedtuple('Person',  'age, height, name') dave = Human(30, 178, 'Dave')
+t the ﬁrst element as secondary:
+alist_of_tuples = [(5,2), (1,3), (2,2)] sorted(alist_of_tuples, key=itemgetter(1,0)) # Output: [(2, 2), (5, 2), (1, 3)] Section 48.2: Operators as alternative to an inﬁx operator
+For every inﬁx operator, e.g. + there is an operator-function (operator.add for +):
+1 + 1 # Output: 2 from operator import add add(1, 1) # Output: 2
+even though the main documentation states that for the arithmetic operators only numerical input is allowed it is possible:
+from operator import mul mul('a', 10) # Output: 'aaaaaaaaaa' mul([3], 3) # Output: [3, 3, 3]
+See also: mapping from operation to operator function in the oﬃcial Python documentation. Section 48.3: Methodcaller
+Instead of this lambda-function that calls the method explicitly:
+alist = ['wolf', 'sheep', 'duck'] list(filter(lambda x: x.startswith('d'), alist))     # Keep only elements that start with 'd' # Output: ['duck']
+one could use a operator-function that does the same:
+from operator import methodcaller
+GoalKicker.com – Python® Notes for Professionals 274
+list(filter(methodcaller('startswith', 'd'), alist)) # Does the same but is faster. # Output: ['duck']
+GoalKicker.com – Python® Notes for Professionals 275
+Chapter 49: JSON Module Section 49.1: Storing data in a ﬁle
+The following snippet encodes the data stored in d into JSON and stores it in a ﬁle (replace filename with the actual name of the ﬁle).
+import json
+d = {    accept a variable number of arguments, we can pass a list to itertools.product for unpacking, with the * operator.
+Thus,
+its = [xrange(10)] * 2 for x,y in itertools.product(*its):    print x, y
+produces the same results as both of the previous examples.
+>>> from itertools import product >>> a=[1,2,3,4] >>> b=['a','b','c'] >>> product(a,b) <itertools.product object at 0x0000000002712F78> >>> for i in product(a,b): ...     print i ... (1, 'a') (1, 'b') (1, 'c') (2, 'a') (2, 'b') (2, 'c') (3, 'a') (3, 'b') (3, 'c') (4, 'a') (4, 'b') (4, 'c') Section 53.12: itertools.count
+Introduction:
+This simple function generates inﬁnite series of numbers. For example...
+for number in itertools.count():    if number > 20:        break    print(number)
+Note that we must break or it prints forever!
+Output:
+GoalKicker.com – Python® Notes for Professionals 290
+0 1 2 3 4 5 6 7 8 9 10
+Arguments:
+count() takes two arguments, start and step:
+for number in itertools.count(start=10, step=4):    print(number)    if number > 20:        break
+Output:
+10 14 18 22 Section 53.13: Chaining multiple iterators together
+Use itertools.chain to create a single generator which will yield the values from several generators in sequence.
+from itertools import chain a = (x for x in ['1', '2', '3', '4']) b = (x for x in ['x', 'y', 'z']) ' '.join(chain(a, b))
+Results in:
+'1 2 3 4 x y z'
+As an alternate constructor, you can use the classmethod chain.from_iterable which takes as its single parameter an iterable of iterables. To get the same result as above:
+' '.join(chain.from_iterable([a,b])
+While chain can take an arbitrary number of arguments, chain.from_iterable is the only way to chain an inﬁnite number of iterables.
+GoalKicker.com – Python® Notes for Professionals 291
+Chapter 54: Asyncio Module Section 54.1: Coroutine and Delegation Syntax
+Before Python 3.5+ was released, the asyncio module used generators to mimic asynchronous calls and thus had a diﬀerent syntax than the current Python 3.5 release.
+Python 3.x Version ≥ 3.5
+Python 3.5 introduced the async and await keywords. Note the lack of parentheses around the await func() call.
+import asyncio
+async def main():    print(await func())
+async def func():    # Do time intensive stuff...    return "Hello, world!"
+if __name__ == "__main__":    loop = asyncio.get_event_loop()    loop.run_until_complete(main()) Python 3.x Version ≥ 3.3 Version < 3.5
+Before Python 3.5, the @asyncio.coroutine decorator was used to deﬁne a coroutine. The yield from expression was used for generator delegation. Note the parentheses around the yield from func().
+import asyncio
+@asyncio.coroutine de
+dave = Person(30, 178, 'Dave')
+Named arguments can also be used:
+jack = Person(age=30, height=178, name='Jack S.')
+Now you can access the attributes of the namedtuple:
+print(jack.age)  # 30 print(jack.name)  # 'Jack S.'
+The ﬁrst argument to the namedtuple constructor (in our example 'Person') is the typename. It is typical to use the same word for the constructor and the typename, but they can be diﬀerent:
+Human = namedtuple('Person',  'age, height, name') dave = Human(30, 178, 'Dave')
+
+Chapter 48: Operator module Section 48.1: Itemgetter
+Grouping the key-value pairs of a dictionary by the value with itemgetter:
+from itertools import groupby from operator import itemgetter adict = {'a': 1, 'b': 5, 'c': 1}
+d
